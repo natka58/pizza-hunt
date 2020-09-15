@@ -9,10 +9,15 @@ const ReplySchema = new Schema(
       default: () => new Types.ObjectId()
     },
     replyBody: {
-      type: String
+      type: String,
+      required: true,
+      trim: true
+    
     },
     writtenBy: {
-      type: String
+      type: String,
+      required: true
+
     },
     createdAt: {
       type: Date,
@@ -32,23 +37,20 @@ const CommentSchema = new Schema({
     type: String
   },
   commentBody: {
-    type: String
+    type: String,
+    required: true
+
   },
   createdAt: {
     type: Date,
     default: Date.now,
-    get: (createdAtVal) => moment(createdAtVal).format('MMM DD, YYYY [at] hh:mm a')
-  },
-   // use ReplySchema to validate data for a reply
-  replies: [ReplySchema]
+    get: createdAtVal => moment(createdAtVal).format('MMM DD, YYYY [at] hh:mm a')
+  }
 },
-
 {
   toJSON: {
-    virtuals: true,
     getters: true
-  },
-  id: false
+  }
 }
 );
 
